@@ -16,6 +16,12 @@ Auto-generated from all feature plans. Last updated: [DATE]
 
 [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES]
 
+## Constitution Compliance
+
+Summarize how active plans and features align with the Project Constitution:
+- Active principles that affect implementation: Clean Architecture, Test-First, Contracts, Observability, Versioning.
+- Quick checklist: tests authored first, contracts versioned, observability added, CI validations present.
+
 ## Code Style
 
 [LANGUAGE-SPECIFIC, ONLY FOR LANGUAGES IN USE]

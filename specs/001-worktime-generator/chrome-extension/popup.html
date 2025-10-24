@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Worktime Generator</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div id="app">
+    <h1>Worktime Generator</h1>
+    <div class="controls">
+      <label>Rows
+        <input id="rows" type="number" min="1" value="1" />
+      </label>
+      <label>Month
+        <div class="month-offset">
+          <button id="offset-decr" aria-label="decrease month offset">-</button>
+          <input id="offset" type="hidden" value="-1" />
+          <span id="offset-display" aria-live="polite"></span>
+          <button id="offset-incr" aria-label="increase month offset">+</button>
+        </div>
+      </label>
+    </div>
+
+    <div class="actions">
+      <button id="generate">Generate</button>
+      <button id="copy">Copy</button>
+    </div>
+
+    <div id="status" role="status" aria-live="polite"></div>
+
+    <pre id="output" tabindex="0" aria-label="Generated worktimes"></pre>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

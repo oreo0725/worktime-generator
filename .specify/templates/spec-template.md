@@ -11,13 +11,19 @@
   IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
   Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
   you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
-  Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
-  Think of each story as a standalone slice of functionality that can be:
-  - Developed independently
-  - Tested independently
-  - Deployed independently
-  - Demonstrated to users independently
+
+  Test-First Requirement: Tests MUST be authored before implementation. For each user story
+  specify:
+    - Unit tests (location and testing framework)
+    - Contract tests (API/CLI/schema assertions)
+    - Integration tests (cross-component flows)
+  Tests MUST fail before implementation begins and be included in the feature spec.
+
+  Contract & Versioning: If the story introduces or modifies external interfaces, include
+  the contract/schema (or a link to it) and a recommended semantic-version bump.
+
+  Observability: Specify logging, metrics, and health checks required for the feature,
+  including metrics naming and units where applicable.
 -->
 
 ### User Story 1 - [Brief Title] (Priority: P1)

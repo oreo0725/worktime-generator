@@ -25,7 +25,7 @@ description: "Task list template for feature implementation"
 - **Mobile**: `api/src/`, `ios/src/` or `android/src/`
 - Paths shown below assume single project - adjust based on plan.md structure
 
-<!-- 
+<!--
   ============================================================================
   IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
   
@@ -34,6 +34,13 @@ description: "Task list template for feature implementation"
   - Feature requirements from plan.md
   - Entities from data-model.md
   - Endpoints from contracts/
+  
+  Constitution compliance: Generated tasks MUST include explicit items for:
+  - Authoring unit, contract, and integration tests (test-first)
+  - Adding or updating contracts/schemas and version bump tasks if applicable
+  - Implementing structured logging, metrics, and health/readiness checks
+  - Migration and deprecation steps for breaking changes
+  - CI validation tasks (run test matrix, contract checks)
   
   Tasks MUST be organized by user story so each story can be:
   - Implemented independently
