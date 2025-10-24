@@ -7,25 +7,37 @@
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+Implement a lightweight Chrome extension (popup) that generates N rows of three unique
+"worktime" timestamps per row, formatted "YYYY-MM-DD HH:MM", constrained to:
+- weekdays (Mon–Fri),
+- time window 08:30–16:30 (minute resolution),
+- dates within the chosen calendar month (first-to-last day),
+- excluding Taiwan public holidays (via public API).
+
+Primary approach:
+- Implement generator logic in a modular, testable plain-vanilla JavaScript module.
+- Fetch Taiwan holiday data per-year from the public API and cache results in localStorage.
+- Ensure uniqueness by sampling available valid minute-resolution time slots and
+  shuffling/allocating without replacement.
+- Expose a small accessible UI in the extension popup with controls for row count,
+  month offset, generate/re-generate, and copy-to-clipboard.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
-
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Vanilla JavaScript (ES2020+), HTML, CSS (no framework).
+**Primary Dependencies**: Browser extension platform (Chrome extension APIs). No external
+runtime libraries required; small utilities permitted (bundled) only if justified.
+**Storage**: localStorage (for cached holiday maps keyed by year, e.g., "taiwan_holidays_2025").
+**Testing**: Unit tests for generator and holiday-cache logic (recommend simple runner or
+Node + Jest for generator logic during CI). Tests should live under `tests/unit/`.
+**Target Platform**: Chrome (desktop) extension popup; must work in Chromium-based browsers.
+**Project Type**: Single-browser extension repository subtree (chrome-extension/).
+**Performance Goals**: Generate up to 1000 rows (3000 timestamps) within 2s on a modern
+laptop; holiday cache lookups O(1).
+**Constraints**: Offline operation for generation only if holiday cache exists; otherwise
+require network to fetch holiday data on first run.
+**Scale/Scope**: Single-user, local-only extension; no backend services required except
+the public holiday API for lookups.
 
 ## Constitution Check
 

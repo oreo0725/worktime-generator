@@ -1,0 +1,42 @@
+# Node
+node_modules/
+dist/
+build/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+.env
+.env.local
+.env.*.local
+
+# Chrome extension build artifacts
+.crx
+*.crx
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+*.swp
+
+# Tests
+tests/__snapshots__/
+tests/output/
+coverage/
+
+# Misc
+*.log
+*.tmp
+
+# Local dev
+local.settings.json

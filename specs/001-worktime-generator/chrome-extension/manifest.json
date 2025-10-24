@@ -1,0 +1,22 @@
+{
+  "manifest_version": 3,
+  "name": "Worktime Generator",
+  "version": "0.1.0",
+  "description": "Generate rows of random worktimes (YYYY-MM-DD HH:MM) excluding Taiwan public holidays and copy to clipboard.",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://api.pin-yi.me/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png"
+  }
+}

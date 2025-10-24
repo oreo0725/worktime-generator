@@ -1,0 +1,13 @@
+{
+  "name": "worktime-generator",
+  "version": "0.1.0",
+  "description": "Worktime Generator Chrome extension (dev)",
+  "private": true,
+  "scripts": {
+    "lint": "eslint . --ext .js",
+    "test": "echo \"No tests yet\" && exit 0",
+    "build:zip": "rm -rf dist && mkdir -p dist && zip -r dist/worktime-generator.zip specs/001-worktime-generator/chrome-extension -x '*.DS_Store'",
+    "webstore:publish": "node scripts/webstore-publish.js"
+  },
+  "devDependencies": {}
+}
