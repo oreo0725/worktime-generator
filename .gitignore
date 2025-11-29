@@ -42,4 +42,4 @@ coverage/
 local.settings.json
 
 # genai
-.roo/
+/.roo/
