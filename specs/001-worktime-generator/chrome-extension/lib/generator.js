@@ -7,7 +7,7 @@ function pad(n) {
 }
 
 function formatRowDisplay(items) {
-  return items.map(s => s).join(', ');
+  return items.map(s => s).join('\t ');
 }
 
 export async function generateRows(numberOfRows = 1, monthOffset = -1) {
