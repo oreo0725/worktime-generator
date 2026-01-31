@@ -15,8 +15,17 @@
 需求重點：
 - user點擊 extension icon 後，才會顯示generator介面，打開後會直接產生1列（3個時間），可修改列數
 - 預設月份範圍為上個月，能用 +/- 調整月份 offset
-- 時間格式 YYYY-MM-DD HH:MM，範圍 08:30-16:30，工作日 (Mon-Fri)，排除台灣國定假日
-- 每列為 3 個逗號分隔時間，如 "2024-05-15 09:30, 2024-05-20 14:02, 2024-05-28 11:15"
+- 時間格式輸出為 MMDDHHMM（例如 2025-04-29 13:43 → "04291343"），範圍 08:30-16:30，工作日 (Mon-Fri)，排除台灣國定假日
+- 每列為 3 個 Tab 分隔時間，如 "04291343\t05011402\t05281115"
+
+## Clarifications
+
+### Session 2025-12-01
+- Q: What is the separator for timestamps in a row? → A: Tab character (`\t`) to support direct pasting into spreadsheet columns.
+- Q: Can a row contain multiple timestamps from the same day? → A: No, the 3 timestamps in a single row must be from 3 distinct days.
+
+### Session 2026-01-31
+- Q: What is the final produced timestamp format? → A: MMDDHHMM (e.g., 2025-04-29 13:43 → 04291343).
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -25,7 +34,7 @@
 Given the user opens the Chrome extension popup,
 When the popup loads,
 Then the extension displays one generated row containing three valid, unique worktimes
-And the row is shown as "YYYY-MM-DD HH:MM, YYYY-MM-DD HH:MM, YYYY-MM-DD HH:MM"
+And the row is shown as "MMDDHHMM\tMMDDHHMM\tMMDDHHMM"
 
 ### User Scenario 2 - Adjust rows and regenerate (P1)
 
@@ -61,16 +70,17 @@ Then the next generation uses the new month range's first-to-last day
 - **FR-002**: On popup load, the extension MUST generate 1 row with 3 random worktimes within the default month range.
 - **FR-003**: The user MUST be able to specify the number of rows to generate (integer ≥ 1).
 - **FR-004**: The user MUST be able to adjust month offset via +/- controls; offset is integer (can be negative or positive).
-- **FR-005**: Generated timestamps MUST be formatted as "YYYY-MM-DD HH:MM".
+- **FR-005**: Generated timestamps MUST be formatted as "MMDDHHMM" (month, day, hour, minute). Example: 2025-04-29 13:43 → "04291343".
 - **FR-006**: Each generated timestamp MUST satisfy Worktime Definition: weekday (Mon-Fri), time between 08:30 and 16:30 inclusive, and not on Taiwan public holidays.
 - **FR-007**: All timestamps generated in a single run MUST be unique (no duplicates across any rows).
-- **FR-008**: Each row MUST contain exactly three timestamps separated by a comma and a space.
+- **FR-008**: Each row MUST contain exactly three timestamps separated by a tab character.
 - **FR-009**: A "Generate" button MUST re-generate according to current settings.
 - **FR-010**: A "Copy" button MUST copy all rows to the clipboard as newline-separated lines.
 - **FR-011**: If the generator cannot produce enough unique timestamps within the month, the UI MUST show a clear error and provide a reduced result or guidance.
 - **FR-012**: The extension MUST default month range to the previous calendar month relative to user current date.
 - **FR-013**: Holiday source for Taiwan public holidays MUST be defined (assumption documented) and applied to exclusion logic.
 - **FR-014**: All randomization MUST be deterministic only per-run; no persistent storage required for uniqueness between runs unless user requests.
+- **FR-015**: The three timestamps within a single row MUST fall on three distinct dates (no two timestamps in the same row can share the same date).
 
 ### Non-Functional Requirements
 
@@ -80,8 +90,8 @@ Then the next generation uses the new month range's first-to-last day
 
 ## Key Entities
 
-- **Worktime**: timestamp string "YYYY-MM-DD HH:MM" representing allowed worktime.
-- **Row**: collection of three Worktimes presented as a single comma-separated line.
+- **Worktime**: timestamp string "MMDDHHMM" representing allowed worktime (month, day, hour, minute).
+- **Row**: collection of three Worktimes presented as a single tab-separated line.
 - **Generator Settings**: number_of_rows (int), month_offset (int), timezone (implicit local).
 - **Holiday Calendar**: set of dates excluded from generation (Taiwan public holidays for target year).
 
@@ -90,8 +100,9 @@ Then the next generation uses the new month range's first-to-last day
 - **SC-001**: When user requests N rows, N lines are generated and visible within the popup within 2 seconds for N ≤ 1000.
 - **SC-002**: All generated timestamps pass Worktime Definition validation (weekday, time window, not a Taiwan holiday).
 - **SC-003**: No duplicate timestamp appears among the entire generated set.
-- **SC-004**: Copy to clipboard places exactly N newline-separated lines, each with three comma-separated timestamps, and pasting into Google Sheets results in N rows populated.
+- **SC-004**: Copy to clipboard places exactly N newline-separated lines, each with three tab-separated timestamps, and pasting into Google Sheets results in N rows populated.
 - **SC-005**: When month offset is changed, generated results reflect the specified month range's first-to-last day.
+- **SC-006**: Each generated row contains timestamps from three different dates.
 
 ## Acceptance Scenarios
 
@@ -117,7 +128,7 @@ Then the next generation uses the new month range's first-to-last day
 
 ## Notes
 
-- Date format and time window MUST be strictly enforced for copy/paste compatibility.
+- Output format MMDDHHMM and time window MUST be strictly enforced for copy/paste compatibility.
 
 ## Key Metrics to Monitor (for future iterations)
 

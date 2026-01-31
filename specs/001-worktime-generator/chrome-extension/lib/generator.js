@@ -6,8 +6,15 @@ function pad(n) {
   return String(n).padStart(2, '0');
 }
 
+function toMMDDHHMM(datetimeStr) {
+  const [datePart, timePart] = datetimeStr.split(' ');
+  const [, month, day] = datePart.split('-');
+  const [hour, minute] = timePart.split(':');
+  return `'${month}${day}${hour}${minute}`;
+}
+
 function formatRowDisplay(items) {
-  return items.map(s => s).join('\t ');
+  return items.join('\t');
 }
 
 export async function generateRows(numberOfRows = 1, monthOffset = -1) {
@@ -79,10 +86,11 @@ export async function generateRows(numberOfRows = 1, monthOffset = -1) {
       return da - db;
     });
 
+    const formattedItems = rowItems.map(toMMDDHHMM);
     rows.push({
       id: String(i + 1),
-      worktimes: rowItems,
-      display: formatRowDisplay(rowItems)
+      worktimes: formattedItems,
+      display: formatRowDisplay(formattedItems)
     });
     producedCount += 3;
   }

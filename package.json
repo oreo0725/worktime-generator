@@ -1,6 +1,6 @@
 {
   "name": "worktime-generator",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Worktime Generator Chrome extension (dev)",
   "private": true,
   "scripts": {
