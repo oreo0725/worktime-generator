@@ -1,5 +1,5 @@
 import { buildCandidateSlots } from './candidates.js';
-import { selectFirstNShuffled } from './selector.js';
+import { shuffle } from './selector.js';
 import { getHolidayMap, ensureHolidayDataForYears } from './holiday.js';
 
 function pad(n) {
@@ -36,26 +36,60 @@ export async function generateRows(numberOfRows = 1, monthOffset = -1) {
     }
     return { rows: [], warning: 'No available worktime slots in selected month.' };
   }
-  const selected = selectFirstNShuffled(candidates, required);
+
+  // Group candidates by date to enforce distinct dates per row
+  const slotsByDay = {};
+  for (const slot of candidates) {
+    const date = slot.split(' ')[0];
+    if (!slotsByDay[date]) slotsByDay[date] = [];
+    slotsByDay[date].push(slot);
+  }
+
   const rows = [];
-  const actualRows = Math.floor(selected.length / 3);
-  for (let i = 0; i < actualRows; i++) {
-    const rowItems = selected.slice(i * 3, i * 3 + 3);
+  let producedCount = 0;
+
+  for (let i = 0; i < numberOfRows; i++) {
+    // Find days that still have slots available
+    const availableDays = Object.keys(slotsByDay).filter(d => slotsByDay[d].length > 0);
+    
+    if (availableDays.length < 3) {
+      break; // Cannot form a complete row with distinct dates
+    }
+
+    // Pick 3 distinct days randomly
+    const selectedDays = shuffle(availableDays).slice(0, 3);
+    const rowItems = [];
+
+    for (const day of selectedDays) {
+      const daySlots = slotsByDay[day];
+      // Pick one slot randomly from this day
+      const picked = shuffle(daySlots)[0];
+      
+      // Remove picked slot from pool
+      const idx = daySlots.indexOf(picked);
+      if (idx > -1) daySlots.splice(idx, 1);
+      
+      rowItems.push(picked);
+    }
+
     // Ensure the three timestamps are in chronological order
     rowItems.sort((a, b) => {
       const da = new Date(a.replace(' ', 'T'));
       const db = new Date(b.replace(' ', 'T'));
       return da - db;
     });
+
     rows.push({
       id: String(i + 1),
       worktimes: rowItems,
       display: formatRowDisplay(rowItems)
     });
+    producedCount += 3;
   }
+
   let warning = null;
-  if (selected.length < required) {
-    warning = `Warning: only ${selected.length} unique timestamps available; requested ${required}.`;
+  if (producedCount < required) {
+    warning = `Warning: only ${producedCount} timestamps generated; requested ${required}. Not enough distinct days available.`;
   }
-  return { rows, warning, requested: required, produced: selected.length };
+  return { rows, warning, requested: required, produced: producedCount };
 }

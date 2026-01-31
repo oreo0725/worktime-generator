@@ -27,8 +27,8 @@ description: "Task list for Worktime Generator Chrome Extension"
 - [x] T007 Implement Shuffle & selector utility at specs/001-worktime-generator/chrome-extension/lib/selector.js (Fisher–Yates using crypto.getRandomValues if available)
 - [x] T008 Implement Generator orchestration module at specs/001-worktime-generator/chrome-extension/lib/generator.js (combine holiday, candidates, selector to produce rows)
 - [x] T009 [P] Add unit test harness and example test for generator in tests/unit/test_generator.js
-- [ ] T010 Add README stub and update quickstart at specs/001-worktime-generator/quickstart.md describing local dev reload steps
-- [ ] T011 Configure basic error/display utilities in popup UI at specs/001-worktime-generator/chrome-extension/popup.js (setStatus, disableButtons)
+- [x] T010 Add README stub and update quickstart at specs/001-worktime-generator/quickstart.md describing local dev reload steps
+- [x] T011 Configure basic error/display utilities in popup UI at specs/001-worktime-generator/chrome-extension/popup.js (setStatus, disableButtons)
 
 **Checkpoint**: Foundational modules and tests present; user story implementation may proceed
 
@@ -50,6 +50,8 @@ description: "Task list for Worktime Generator Chrome Extension"
 - [x] T014 [US1] Ensure popup.html contains output container at specs/001-worktime-generator/chrome-extension/popup.html (element id used by popup.js)
 - [x] T015 [US1] Render single row output format in popup.js using generator output and ensure formatting "YYYY-MM-DD HH:MM, YYYY-MM-DD HH:MM, YYYY-MM-DD HH:MM"
 - [x] T016 [US1] Add status messages for success and error cases in popup.js
+- [x] T034 [P] [US1] Add unit test: row timestamps must be from distinct dates in tests/unit/test_generator.js (covers FR-015, SC-006)
+- [x] T035 [US1] Update generator logic to enforce distinct dates per row in specs/001-worktime-generator/chrome-extension/lib/generator.js (covers FR-015)
 
 **Checkpoint**: US1 should be independently executable and testable
 
@@ -103,7 +105,7 @@ description: "Task list for Worktime Generator Chrome Extension"
 
 ### Tests for User Story 4
 
-- [ ] T025 [P] [US4] Add unit test for month offset handling and holiday-year fetches in tests/unit/test_month_offset.js
+- [x] T025 [P] [US4] Add unit test for month offset handling and holiday-year fetches in tests/unit/test_month_offset.js
 
 ### Implementation for User Story 4
 
@@ -119,11 +121,11 @@ description: "Task list for Worktime Generator Chrome Extension"
 
 **Purpose**: Accessibility, performance, docs, CI, and release readiness
 
-- [ ] T029 [P] Add ARIA labels and keyboard support in popup.html and popup.js to meet NFR-003
-- [ ] T030 [P] Add unit test coverage target and CI workflow files at .github/workflows/ci.yml to run tests and lint
-- [ ] T031 [P] Performance tune generator for N ≤ 1000 rows and add benchmark script in scripts/benchmark.js
-- [ ] T032 Update specs/001-worktime-generator/quickstart.md with exact developer steps and test commands
-- [ ] T033 [P] Run quick manual validation steps and document results in specs/001-worktime-generator/checklists/requirements.md
+- [x] T029 [P] Add ARIA labels and keyboard support in popup.html and popup.js to meet NFR-003
+- [x] T030 [P] Add unit test coverage target and CI workflow files at .github/workflows/ci.yml to run tests and lint
+- [x] T031 [P] Performance tune generator for N ≤ 1000 rows and add benchmark script in scripts/benchmark.js
+- [x] T032 Update specs/001-worktime-generator/quickstart.md with exact developer steps and test commands
+- [x] T033 [P] Run quick manual validation steps and document results in specs/001-worktime-generator/checklists/requirements.md
 
 ---
 
@@ -161,10 +163,10 @@ description: "Task list for Worktime Generator Chrome Extension"
 ## Output summary
 
 - Generated file: specs/001-worktime-generator/tasks.md
-- Total tasks: 33
+- Total tasks: 35
 - Tasks per story:
   - Foundational: 7
-  - US1: 4
+  - US1: 6
   - US2: 4
   - US3: 4
   - US4: 3

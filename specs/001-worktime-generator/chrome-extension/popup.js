@@ -91,6 +91,7 @@ async function runGenerate() {
   } catch (err) {
     console.error(err);
     setStatus('Error: ' + (err && err.message ? err.message : String(err)));
+    renderOutput([]); // Clear output on error
   } finally {
     disableButtons(false);
   }
@@ -234,7 +235,15 @@ async function copyOutput() {
 
 function setStatus(msg) {
   const s = document.getElementById(STATUS_ID);
-  if (s) s.textContent = msg;
+  if (s) {
+    s.textContent = msg;
+    // Auto-clear status after 5 seconds if it's a success message
+    if (msg.startsWith('Generated') || msg.startsWith('Copied')) {
+      setTimeout(() => {
+        if (s.textContent === msg) s.textContent = '';
+      }, 5000);
+    }
+  }
 }
 
 function disableButtons(disabled) {

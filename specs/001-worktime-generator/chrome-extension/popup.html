@@ -10,17 +10,16 @@
   <div id="app">
     <h1>Worktime Generator</h1>
     <div class="controls">
-      <label>Rows
-        <input id="rows" type="number" min="1" value="1" />
-      </label>
-      <label>Month
-        <div class="month-offset">
-          <button id="offset-decr" aria-label="decrease month offset">-</button>
-          <input id="offset" type="hidden" value="-1" />
-          <span id="offset-display" aria-live="polite"></span>
-          <button id="offset-incr" aria-label="increase month offset">+</button>
-        </div>
-      </label>
+      <label for="rows">Rows</label>
+      <input id="rows" type="number" min="1" value="1" aria-label="Number of rows to generate" />
+      
+      <label id="month-label">Month</label>
+      <div class="month-offset" role="group" aria-labelledby="month-label">
+        <button id="offset-decr" aria-label="Previous month">-</button>
+        <input id="offset" type="hidden" value="-1" />
+        <span id="offset-display" aria-live="polite"></span>
+        <button id="offset-incr" aria-label="Next month">+</button>
+      </div>
     </div>
 
     <div class="actions">

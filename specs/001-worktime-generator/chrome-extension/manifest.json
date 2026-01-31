@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Worktime Generator",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Generate rows of random worktimes (YYYY-MM-DD HH:MM) excluding Taiwan public holidays and copy to clipboard.",
   "action": {
     "default_popup": "popup.html",
