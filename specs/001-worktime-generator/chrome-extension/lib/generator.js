@@ -10,7 +10,7 @@ function toMMDDHHMM(datetimeStr) {
   const [datePart, timePart] = datetimeStr.split(' ');
   const [, month, day] = datePart.split('-');
   const [hour, minute] = timePart.split(':');
-  return `'${month}${day}${hour}${minute}`;
+  return `${month}${day}${hour}${minute}`;
 }
 
 function formatRowDisplay(items) {
